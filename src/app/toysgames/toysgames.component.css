@@ -1,0 +1,28 @@
+.card{
+    height: 400px;
+    padding:50px 10px;
+    /*box-shadow: 10px 10px lightcoral;
+    margin: 15px;
+    border-radius: 5px;
+    border-color: black;*/
+    margin: 15px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    width: 275px;
+}
+.card img{
+    height:200px;
+    width: 200px;
+    display: flex;
+    justify-content: center; 
+
+}
+h4{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

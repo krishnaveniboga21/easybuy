@@ -1,0 +1,25 @@
+.card{
+    height: 400px;
+    padding:50px 15px;
+    /*box-shadow: 10px 10px lightcoral;
+   
+    border-radius: 5px;
+    border-color: black;*/
+    border: none;
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    width: 220px;
+}
+.card img{
+    height:200px;
+    width:230px;
+    display: flex;
+    justify-content: center;
+
+}
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

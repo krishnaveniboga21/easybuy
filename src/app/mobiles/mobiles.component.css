@@ -1,0 +1,31 @@
+.card{
+     /* padding: 10px;   */
+    box-shadow: 10px 10px lightblue;
+    margin: 15px;
+    justify-content: center;
+    /* margin-right: 20px; */
+    width: 275px;
+    display: flex;
+}
+/* h4{
+    text-align: center;
+    
+}
+p{
+    text-align: center;
+} */
+
+.card img{
+    height: 250px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    
+}
+.btn btn{
+ text-align: center;
+ margin-left: 180px;
+}
+h4{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

@@ -1,0 +1,14 @@
+h1{
+    color:blue;
+    text-align: center;
+    background-color: greenyellow;
+     /* display: flex;  */
+    /* justify-content: center; */
+}
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+     

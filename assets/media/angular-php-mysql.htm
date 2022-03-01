@@ -1,0 +1,2060 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="preconnect" href="https://cdn.static.daypilot.org" />
+		<link rel="dns-prefetch" href="https://cdn.static.daypilot.org" />
+
+		<link rel="preconnect" href="https://cdn.code.daypilot.org" />
+		<link rel="dns-prefetch" href="https://cdn.code.daypilot.org" />
+<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="referrer" content="unsafe-url" />
+
+		<title>Angular Restaurant Table Reservation (PHP/MySQL) | DayPilot Code</title><meta name="description" content="Angular application that lets you manage restaurant table reservations. Includes a PHP/MySQL backend." /><style>
+	/*** main ***/
+
+body {
+    margin: 0;
+}
+body, input, select, button {
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    font-size: 15px;
+}
+
+/* header */
+.dpw-header  {
+    background: url("data:image/png;base64,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");
+    height: 40px;
+    box-shadow: 0px 5px 10px -5px rgba(0,0,0,0.6);
+}
+.dpw-header a {
+    color: white;
+}
+.dpw-header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+
+    color: white;
+    font-size: 14px;
+}
+
+.dpw-header-item {
+    display: inline-block;
+}
+
+.dpw-header-main {
+    font-weight: bold;
+}
+
+.dpw-header a,
+.dpw-header a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.dpw-header-item > a,
+.dpw-header-item > a:visited {
+    padding: 10px 0px;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.dpw-header-item a.dpw-header-item-selected {
+    box-sizing: border-box;
+    /* border-bottom: 4px solid #999; */
+    border-bottom: 4px solid #00639e;
+}
+
+.dpw-header .dpw-header-right {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.dpw-header form {
+    display: inline-block;
+}
+
+.dpw-header .dpw-header-right .dpw-header-search fieldset {
+    padding: 5px 0 5px;
+    border: 0;
+}
+
+.dpw-header .dpw-header-right .dpw-header-search input {
+    padding: 2px 5px;
+    font-size: 14px;
+}
+
+/* subheader */
+.dpw-subheader {
+    border-bottom: 1px solid #ccc;
+    min-height: 40px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    box-shadow: 0px 5px 10px -5px rgba(0,0,0,0.2);
+}
+
+.dpw-subheader-inner {
+    margin: 0 auto;
+    max-width: 1100px;
+
+    font-size: 14px;
+    /*padding: 10px 0;*/
+}
+
+.dpw-subheader-item {
+    display: inline-block;
+}
+
+.dpw-subheader a,
+.dpw-subheader a:visited {
+    color: #666;
+    text-decoration: none;
+}
+
+.dpw-subheader > a,
+.dpw-subheader > a:visited {
+    padding: 10px 0px;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+/* title */
+
+
+.dpw-title {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+
+    box-shadow: 0px 5px 10px -5px rgba(0,0,0,0.2);
+}
+
+.dpw-title-inner {
+    margin: 0 auto;
+    max-width: 1100px;
+    padding: 20px 0;
+}
+
+.dpw-title h1 {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+
+/* main */
+
+.dpw-main {
+    max-width: 1100px;
+    margin: 20px auto 0;
+    overflow: hidden;
+}
+
+.dpw-body-inner {
+    line-height: 1.5;
+}
+
+.section-highlight {
+    position: relative;
+    margin: 30px 0px;
+    padding: 30px 0px;
+    box-sizing: border-box;
+}
+
+.section-highlight:before {
+    position: absolute;
+    left:0px;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    margin-left: -1000px;
+    margin-right: -1000px;
+    background-color: #f0f0f0;
+    content: '';
+    z-index: -1;
+}
+
+.dpw-body-edit {
+    position: fixed;
+    right: 0;
+    bottom: 0px;
+    background-color: red;
+    padding: 5px;
+    color: white;
+}
+
+.dpw-body-edit a {
+    color: white;
+}
+
+.dpw-body h1 {
+    font-size: 30px;
+    margin: 0;
+    padding-bottom: 30px;
+}
+
+.dpw-body h2 {
+    font-size: 30px;
+    /*margin: 0;*/
+    padding-top: 40px;
+    font-weight: normal;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.dpw-body table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.dpw-body table th {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 20px 5px;
+}
+
+.dpw-body table td {
+    padding: 20px 5px;
+    border: 1px solid #ccc;
+}
+
+.dpw-body table tr th:first-child {
+    padding-right: 20px;
+    text-align: left;
+}
+
+.dpw-body td, .dpw-body th {
+    text-align: center;
+}
+
+
+.dpw-body img {
+    max-width: 100%;
+    height: auto;
+    margin-left: -5px;
+}
+
+.dpw-body a {
+    color: #1155a3;
+}
+
+.dpw-sidebar a {
+    color: #1155a3;
+}
+
+.dpw-body pre {
+    background-color: #f7f7f9;
+    width: 100%;
+    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    font-size: 13px;
+    line-height: 1.42;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    padding: 0.5em;
+}
+
+.dpw-body em {
+    font-family: monospace;
+    font-style: normal;
+    padding: .2rem .4rem;
+    border-radius: 5px;
+    font-size: .8rem;
+    font-weight: 700;
+    background: rgba(0,0,0,.1);
+    color: rgba(0,0,0,.8);
+}
+
+.dpw-body p code {
+    font-family: monospace;
+    font-style: normal;
+    padding: .2rem .4rem;
+    border-radius: 5px;
+    font-size: .8rem;
+    font-weight: 700;
+    background: rgba(0,0,0,.1);
+    color: rgba(0,0,0,.8);
+}
+
+.dpw-body ul {
+    margin: 0.2em 0 1em;
+    padding: 0;
+    list-style-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAHAQMAAAAVq36TAAAABlBMVEX09PSTswCvaW5/AAAAAXRSTlMAQObYZgAAABxJREFUeF4NwzEBAAAIArBFJxpRjGAEPSZq7KscJF4FMTAtnEMAAAAASUVORK5CYII=);
+    list-style-position: inside;
+}
+
+.dpw-body ul li {
+    line-height: 1.8;
+    padding-left: 12px;
+    text-indent: -12px;
+}
+
+/* fix */
+.dpw-body ul li div {
+    display: inline;
+}
+
+/* text */
+
+p.image-left img {
+    max-width: 50%;
+    float: left;
+    margin-right: 20px;
+}
+
+p.image-right img {
+    max-width: 50%;
+    float: right;
+    margin-left: 20px;
+}
+
+h1, h2, h3, h4, table {
+    clear:both;
+}
+
+.dpw-body h2 a {
+    color: black;
+    text-decoration: none;
+}
+
+/* inline elements */
+
+a.inline-btn {
+    padding: 10px 40px;
+    display: inline-block;
+    background-color: #00639e;
+    color: white;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+a.inline-btn-lighter {
+    padding: 10px 40px;
+    display: inline-block;
+    background-color: #3495CF;
+    color: white;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+table td a.inline-btn {
+    width: 100%;
+    text-align: center;
+}
+
+.new-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #e69138;
+}
+
+/* breadcrumbs */
+
+.breadcrumbs {
+    font-size: 12px;
+    color: #666;
+}
+
+.breadcrumbs a {
+    color: #666;
+}
+
+/* footer */
+
+.dpw-footer {
+    background: url("data:image/png;base64,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");
+    min-height: 200px;
+    margin-top: 40px;
+}
+
+.dpw-footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.dpw-footer a:hover {
+    text-decoration: underline;
+}
+
+.dpw-footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+
+    color: white;
+    font-size: 11px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.dpw-footer ul {
+    margin: 0;
+    padding: 0;
+}
+
+.dpw-footer ul li {
+    list-style: none;
+}
+
+
+/* cols */
+
+
+.dpw-four-cols .dpw-col {
+    display: inline-block;
+    vertical-align:top;
+    width: 24%;
+}
+
+/* cookie */
+
+.dpw-cookie-main {
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid gray;
+    background-color: white;
+    padding: 10px;
+    /*font-family: "Open Sans", sans-serif;*/
+    font-size: 12px;
+    max-width: 400px;
+}
+
+.dpw-cookie-main-buttons {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.dpw-cookie-main-ok {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+}
+
+/* layouts */
+.dpw-no-sidebar .dpw-header-inner,
+.dpw-no-sidebar .dpw-subheader-inner,
+.dpw-no-sidebar .dpw-body-inner,
+.dpw-no-sidebar .dpw-footer-inner,
+.dpw-no-sidebar .dpw-title-inner
+{
+    max-width: 870px;
+}
+
+.dpw-header-inner,
+.dpw-subheader-inner,
+.dpw-body-inner,
+.dpw-footer-inner,
+.dpw-title-inner
+{
+    box-sizing: border-box;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.dpw-no-sidebar .dpw-sidebar {
+    display: none;
+}
+
+.dpw-no-sidebar .dpw-main {
+    display: block;
+    max-width: none;
+}
+
+.dpw-no-sidebar .dpw-body-inner {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* sidebar right */
+
+.dpw-sidebar-right .dpw-body-inner {
+
+}
+
+.dpw-sidebar-right .dpw-body {
+    width: 100%;
+    float: left;
+}
+
+.dpw-sidebar-right .dpw-body-inner {
+    margin-right: 230px;
+}
+
+.dpw-sidebar-right .dpw-sidebar {
+    /* order: 2; */
+    width: 230px;
+    margin-left: -230px;
+    float: left;
+}
+/* sidebar left */
+
+.dpw-sidebar-left .dpw-body-inner {
+
+}
+
+.dpw-sidebar-left .dpw-body {
+    margin-left: 230px;
+}
+
+.dpw-sidebar-left .dpw-sidebar {
+    width: 220px;
+    float: left;
+}
+
+.dpw-sidebar-left h1,
+.dpw-sidebar-left h2,
+.dpw-sidebar-left h3,
+.dpw-sidebar-left h4,
+.dpw-sidebar-left table {
+    clear: none;
+}
+
+/* sidebar bottom */
+
+.dpw-sidebar-bottom .dpw-header-inner,
+.dpw-sidebar-bottom .dpw-subheader-inner,
+.dpw-sidebar-bottom .dpw-body-inner,
+.dpw-sidebar-bottom .dpw-footer-inner,
+.dpw-sidebar-bottom .dpw-title-inner
+{
+    max-width: 870px;
+}
+
+.dpw-sidebar-bottom .dpw-main {
+    display: block;
+    max-width: none;
+}
+
+.dpw-sidebar-bottom .dpw-body-inner {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dpw-sidebar-bottom .dpw-sidebar {
+    max-width: 870px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* sidebar */
+
+.dpw-sidebar img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* elements */
+
+a.dpw-button-action {
+    color: #fff;
+    text-decoration: none;
+}
+.dpw-button-action {
+    background-color: #3c78d8;
+    border: 1px solid #15c;
+    color: #fff;
+    padding: 6px 20px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.dpw-button-action.disabled {
+    background-color: #a7c1ed;
+    border: 1px solid #759ee3;
+    cursor: not-allowed;
+}
+
+
+/* screens */
+@media screen and (max-width: 1000px) {
+
+    .dpw-sidebar-right .dpw-body-inner {
+        margin-right: 0px;
+    }
+    .dpw-sidebar-right .dpw-sidebar {
+        float: left;
+        width: 100%;
+        margin-left: 0px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .dpw-sidebar-left .dpw-main {
+        display: flex; flex-flow: column;
+    }
+
+    .dpw-sidebar-left .dpw-body {
+        order: 1;
+
+        margin-left: 0px;
+    }
+    .dpw-sidebar-left .dpw-sidebar {
+        order: 2;
+
+        width: 100%;
+        margin-left: 0px;
+        margin-top: 20px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .dpw-header-search input[type=text] {
+        max-width: 100px;
+    }
+    .dpw-four-cols .dpw-col {
+        width: 49%;
+    }
+
+    /* breadcrumbs */
+
+    .breadcrumbs-segment, .breadcrumbs-segment-this, .breadcrumbs-separator {
+        display: none;
+    }
+    .breadcrumbs-segment.breadcrumbs-segment-last {
+        display: inline-block;
+        font-size: 14px;
+    }
+    .breadcrumbs-segment-last:before {
+        content: "\ab";
+        display: inline-block;
+        margin-right: 5px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+
+    .dpw-four-cols .dpw-col {
+        width: 99%;
+    }
+}
+
+
+/*** articles ***/
+
+
+/* font */
+
+
+/* global */
+/*img { image-rendering: crisp-edges; }*/
+.dpw-title h1 {	font-size: 36px; }
+h1, h2 { line-height: 1.4; }
+
+.space { margin-top: 15px; margin-bottom: 15px; }
+.gray {	color: #999; }
+
+/* article list */
+
+.article-list { margin-top: 30px; }
+.article-list .article { margin-bottom: 50px; }
+.article-list .clear { clear:both; }
+.article-list .image { width:200px; height:120px; float:left; overflow: hidden; border: 4px solid #ccc; margin-bottom: 10px; }
+.article-list .image a { width:200px; height:120px; display:block; }
+.article-list .text { margin-left: 220px; }
+.article-list .article-title { font-size:28px; font-weight: bold; line-height: 1.4; }
+.article-list .article-title a {text-decoration: none; color: #333; font-weight: normal;}
+.article-list .article-desc { /*font-size: 14px;*/ margin: 10px 0px; color: #666; }
+.article-list .article-date { /*font-size: 14px;*/ color: #999; }
+.article-list img {	max-width: none; }
+
+@media screen and (max-width: 600px) {
+    .article-list .image { float: none; }
+    .article-list .text { margin-left: 0px; }
+    .article-list .article { margin-bottom: 20px; }
+}
+
+/* home */
+
+.home-first { margin-bottom: 50px; margin-top: 20px; }
+.home-first-screen { position:relative; }
+.home-first-screen img { max-width: 100%; height: auto;}
+.home-first-screen-text { position:absolute; bottom: 15px; left: 15px; right: 15px; background-color: #0A2847; opacity: 1; box-sizing: border-box; }
+.home-first-screen-text a { color: #fff; text-decoration:none; display:block; padding: 20px 10px; font-size: 200%; font-weight: bold; }
+.home-first-desc { /*font-size: 15px;*/ color: #666; margin: 10px 0px; /* padding: 10px; */ }
+.home-first-date { color: #999; margin-top: 5px;}
+.home-first-desc .tags { margin-top: 10px; }
+
+.daypilot-code-home h2 a, .daypilot-code-home .article-title a { text-decoration: none; color: #333; font-weight: normal; }
+.daypilot-code-home h2 a:hover, .daypilot-code-home .article-title a:hover { color: #666; }
+.daypilot-code-home h2 { padding: 0px; margin-bottom: 10px; }
+
+
+.tags-item { margin-bottom: 5px; width: 160px; display: inline-block; vertical-align: middle; font-size: 13px; }
+
+.daypilot-code-home .article-list img {
+    margin-left: -10px;
+    margin-top: -10px;
+    height: 200px;
+    width: auto;
+}
+
+.daypilot-code-home .article-list .image { height: 150px; width: 250px;}
+.daypilot-code-home .article-list .image a { height: 150px; width: 250px;}
+.daypilot-code-home .article-list .text { margin-left: 270px; }
+
+.home-more-articles {
+    text-align: center;
+    margin: 20px 0px;
+}
+
+.home-more-articles a {
+    background-color: #00639e;
+    color: white;
+    text-decoration: none;
+    padding: 5px 40px;
+    font-size: 30px;
+    font-weight: normal;
+    display: inline-block;
+
+}
+
+.home-browse {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 20px;
+
+
+}
+
+@media screen and (max-width: 600px) {
+    .daypilot-code-home .article-list .image { float: none; }
+    .daypilot-code-home .article-list .text { margin-left: 0px; }
+}
+
+/* article text */
+
+.daypilot-code-article { color: #414141; }
+.dpw-body .daypilot-code-article h2 { padding-top: 0px; }
+.article-intro { margin-top: 40px; margin-bottom: 40px; margin-right: 10px; padding: 40px; font-size: 20px; background-color: #f0f0f0; border: 1px solid #ccc; }
+.tags { margin-top: 4px; margin-bottom: 4px; }
+.tags a { display:inline-block; border:1px solid #bdc9d6; font-size:92%; padding: 2px 5px; margin: 0 2px 4px 0; text-decoration: none; border-radius: 5px;  }
+.tags a:hover { background-color: #DEE7F8; color: black; }
+
+.daypilot-code-article .tags {
+    margin: 20px 0px 20px 10px;
+    font-size: 16px;
+}
+
+ul.download { list-style-image: none; list-style-type: none; }
+ul.download li { padding: 1px 0 1px 40px; background: url('img/download20.png') 0 0 no-repeat; padding-bottom: 5px; font-size: 12px; }
+ul.download li a { line-height: 1.4; font-size: 130%; font-weight: bold; }
+.dpw-body ul.download li div { display: block; }
+
+
+.app-banner {
+    margin: 20px 10px 20px 0px;
+}
+
+.app-banner-button {
+    margin-top: 10px;
+    /*text-align: center;*/
+}
+.app-banner-button a {
+    padding: 10px 0px;
+    background-color: #6aa84f;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    width: 180px;
+}
+
+/* override */
+
+.dpw-id-code .dpw-header-item > a,
+.dpw-id-code .dpw-header-item > a:visited {
+    margin-right: 28px;
+}
+
+.dpw-body-edit2 {
+    position: fixed;
+    bottom: 30px;
+    right: 0px;
+    background-color: orange;
+    padding: 5px;
+    color: #fff;
+}
+.dpw-body-edit2 a {
+    color: #fff;
+}
+
+.dpw-body .daypilot-code-article pre {
+    padding: 1em;
+}
+
+.dpw-footer .dpw-footer-inner {
+    font-size: 12px;
+}
+
+.dpw-footer .dpw-footer-inner a {
+    display: inline-block;
+    padding: 2px 0px;
+}
+.dpw-footer .dpw-footer-inner li {
+    margin: 2px 0px;
+}
+/* summary */
+
+.dpw-body .article-summary {
+    padding-right: 10px;
+}
+
+.dpw-body .article-summary table td {
+    text-align: left;
+}
+
+.dpw-body .article-summary table td ul {
+    margin-bottom: 0px;
+}
+
+.dpw-body .article-summary table th  {
+    padding-left: 15px;
+}
+
+.downloads {
+    margin-top: 10px;
+}
+
+.download-item {
+    clear:both;
+    margin-bottom: 10px;
+}
+
+.download-now-button {
+    width: 200px;
+    box-sizing: border-box;
+    padding: 0px 10px;
+}
+
+.download-now-button a {
+    background-color: #00639e;
+    color: white;
+    padding: 10px 0px;
+    float: left;
+    text-decoration: none;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    width: 100%;
+}
+
+.download-item-description {
+    margin-left: 200px;
+}
+
+.download-item-description a {
+    font-weight: bold;
+}
+
+.license-description {
+    padding-left: 15px;
+}
+
+.buy-now-button {
+    width: 200px;
+    box-sizing: border-box;
+    padding: 0px 10px;
+
+}
+
+.buy-now-button a {
+    background-color: #38761d;
+    color: white;
+    padding: 10px 0px;
+    float: left;
+    text-decoration: none;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    width: 100%;
+}
+
+
+.buy-description {
+    margin-left: 200px;
+    /*padding: 10px 0px;*/
+}
+
+.summary-technologies {
+    padding-left: 15px;
+}
+.summary-languages {
+    padding-left: 15px;
+}
+
+
+/* sidebar */
+.related-articles {
+    box-sizing: border-box;
+    padding-left: 10px;
+}
+
+.article-list-small .article {
+    margin-top: 25px;
+}
+
+.article-list-small .text {
+    font-size: 13px;
+    color: #666;
+}
+
+/* share buttons */
+
+.share-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.share-button {
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+    position:relative;
+}
+
+.sb-twitter {
+    background-color: #26c4f1;
+}
+.sb-facebook {
+    background-color: #306199;
+}
+.sb-googleplus {
+    background-color: #e93f2e;
+}
+.sb-linkedin {
+    background-color: #007bb6;
+}
+.share-button:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    opacity: 0;
+    display: block;
+    transition: opacity 0.2s;
+}
+.share-button:hover:after {
+    opacity:0.2;
+}
+
+/* related right */
+
+.dpw-sidebar-right .related-articles-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* related bottom */
+
+.dpw-sidebar-bottom .related-articles {
+    margin-top: 40px;
+    padding: 5px;
+}
+
+.dpw-sidebar-bottom .related-articles .article .image {
+    float: left;
+    width: 200px;
+}
+
+.dpw-sidebar-bottom .related-articles .article .text {
+    margin-left: 200px;
+    box-sizing: border-box;
+    padding-left: 10px;
+}
+
+.dpw-sidebar-bottom .related-articles .article .clear {
+    clear:both;
+}
+
+.dpw-sidebar-bottom .related-article-title  {
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.dpw-sidebar-bottom .related-articles-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+/* ask */
+
+.questions-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.ask-a-question a {
+    background-color: #00639e;
+    color: white;
+    padding: 10px 40px;
+    text-decoration: none;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+
+}
+
+
+/* inline */
+
+a.action-button {
+    background-color: #00639e;
+    color: white;
+    padding: 10px 0px;
+    text-decoration: none;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    width: 200px;
+}
+
+
+.dpw-id-code .dpw-body em {
+    font-family: monospace;
+    font-style: normal;
+
+    padding: .2rem .4rem;
+    border-radius: 5px;
+    font-size: .8rem;
+    font-weight: 700;
+    background: rgba(0,0,0,.1);
+    color: rgba(0,0,0,.8);
+}
+
+li > p:first-child {
+    display: inline;
+}
+
+/* related bottom big */
+
+/* related articles bottom */
+
+.related-bottom {
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.related-bottom-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.related-bottom .article {
+    /*display: inline-block;*/
+    max-width: 100%;
+    margin-top: 50px;
+}
+
+.related-bottom .related-article-title a {
+    font-size: 24px;
+    font-weight: bold;
+    /*font-weight: normal;*/
+    text-decoration: none;
+    color: #333;
+}
+
+
+/*!
+ * Agate by Taufik Nurrohman <https://github.com/taufik-nurrohman>
+ */
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    background: #333 !important;
+    color: white !important;
+}
+
+.hljs-name,
+.hljs-strong {
+    font-weight: bold;
+}
+
+.hljs-code,
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-tag {
+    color: #62c8f3;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-selector-id,
+.hljs-selector-class {
+    color: #ade5fc;
+}
+
+.hljs-string,
+.hljs-bullet {
+    color: #a2fca2;
+}
+
+.hljs-type,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-quote,
+.hljs-built_in,
+.hljs-builtin-name {
+    color: #ffa;
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet {
+    color: #ff9595;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal {
+    color: #fcc28c;
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-code {
+    color: #aaa;
+}
+
+.hljs-regexp,
+.hljs-link {
+    color: #c6b4f0;
+}
+
+.hljs-meta {
+    color: #fc9b9b;
+}
+
+.hljs-deletion {
+    background-color: #fc9b9b;
+    color: #333;
+}
+
+.hljs-addition {
+    background-color: #a2fca2;
+    color: #333;
+}
+
+.hljs a {
+    color: inherit;
+}
+
+.hljs a:focus,
+.hljs a:hover {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* pm fix */
+li > p {
+    padding: 0;
+    margin: 0;
+}</style>
+
+<link rel="shortcut icon" href="https://static.daypilot.org/favicon/1.0/favicon.ico" type="image/x-icon" />
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-212202-34']);
+		  _gaq.push(['_gat._anonymizeIp']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		  
+		</script>
+
+		
+
+
+
+
+	</head>
+	<body class="dpw-no-sidebar dpw-id-code"> <!-- dpw-sidebar-right -->
+		
+
+
+
+
+    <div class="dpw-header">
+        <div class="dpw-header-inner">
+            <div class="dpw-header-item dpw-header-main"><a href="https://www.daypilot.org/">DayPilot</a></div>
+            <div class="dpw-header-item"><a href="https://www.daypilot.org/products/">Products</a></div>
+            <div class="dpw-header-item"><a href="https://www.daypilot.org/support/">Support</a></div>
+            <div class="dpw-header-right">
+                
+                <form action="//www.google.com/cse" id="searchbox_011621485683501712701:6l6dv64j8ok" class="dpw-header-search">
+                    <fieldset>
+                        <input type="hidden" name="cx" value="011621485683501712701:6l6dv64j8ok" />
+                        <input type="text" name="q" size="20" class="int" />
+                        <input type="submit" value="Search" alt="Search" title="Search" name="sa" class="search-button" />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="dpw-subheader">
+        <div class="dpw-subheader-inner">
+            <!-- HTML5 Scheduling Components -->
+            <div class="dpw-header-item"><a href="/" title="Scheduling Tutorials and Source Code">DayPilot Code</a></div>
+            <div class="dpw-header-item"><a href="/tutorials/javascript" class='' title="JavaScript Tutorials and Source Code">JavaScript</a></div>
+            <div class="dpw-header-item"><a href="/tutorials/angular" class='' title="Angular Tutorials and Source Code">Angular</a></div>
+            <div class="dpw-header-item"><a href="/tutorials/react" class='' title="React Tutorials and Source Code">React</a></div>
+            <div class="dpw-header-item"><a href="/tutorials/vuejs" class='' title="Vue Tutorials and Source Code">Vue</a></div>
+            <div class="dpw-header-item"><a href="/tutorials/asp.net" class='' title="ASP.NET Tutorials and Source Code">ASP.NET</a></div>
+            <div class="dpw-header-item"><a href="/tutorials/asp.net-core" class='' title="ASP.NET Core Tutorials and Source Code">ASP.NET Core</a></div>
+            <div class="dpw-header-item"><a href="/tutorials/php" class='' title="PHP Tutorials and Source Code">PHP</a></div>
+            <div class="dpw-header-item"><a href="/tutorials/java" class='' title="Java Tutorials and Source Code">Java</a></div>
+            <div class="dpw-header-item"><a href="/tutorials/open-source" class='' title="Open-Source Tutorials and Source Code">Open-Source</a></div>
+        </div>
+    </div>
+    
+    <div class="dpw-title">
+    	<div class="dpw-title-inner">
+		    
+			<h1>Angular Restaurant Table Reservation (PHP/MySQL)</h1>	
+		</div>	   
+    </div>
+    
+	    <div class="dpw-main">
+	        <div class="dpw-body">
+	            <div class="dpw-body-inner">
+	                
+ 
+
+
+
+
+<div class="daypilot-code-article">
+
+<div class="article-intro">Angular application that lets you manage restaurant table reservations. Includes a PHP/MySQL backend.</div>
+
+<div class="tags">
+	Tags:&nbsp;
+	
+	<a href="/tutorials/restaurant" title="Restaurant Reservation Tutorials">restaurant</a>
+	
+	<a href="/tutorials/php" title="PHP Scheduling and Reservation Tutorials">php</a>
+	
+	<a href="/tutorials/reservation" title="Reservation Web App Tutorials">reservation</a>
+	
+	<a href="/tutorials/angular" title="Angular Calendar and Scheduler Tutorials">angular</a>
+	
+	<a href="/tutorials/angular12" title="Angular 12 Scheduling Tutorials">angular12</a>
+	
+	<a href="/tutorials/row-header-columns" title="Row Header Columns (Tutorials)">row-header-columns</a>
+	
+	<a href="/tutorials/scheduler" title="Scheduler Web Component Tutorials">scheduler</a>
+	
+	<a href="/tutorials/typescript" title="TypeScript Calendar and Scheduler Tutorials">typescript</a>
+	
+	<a href="/tutorials/mysql" title="MySQL Tutorials">mysql</a>
+	
+</div>
+
+
+
+	
+	
+	<div><img src="https://cdn.code.daypilot.org/image/big/n4ow6wkfure3llhuouzfusc57e/angular-restaurant-table-reservation-php-mysql.png" alt="angular restaurant table reservation php mysql" title="angular restaurant table reservation php mysql"  width="860" height="537" /></div>
+	
+
+
+
+
+
+
+
+
+<div class="article-summary">
+<table>
+	<tr><th>Downloads</th><td>
+		<div class="downloads">
+		
+		<div class="download-item">
+			<div class="download-now-button">
+				<a href="/file/download/tqwgz4ctebcttbntf42dp6vfbi/angular12-restaurant.20210615.zip" class="trackme" data-track-category="File" data-track-action="Download">Download Source</a>
+			</div>
+			<div class="download-item-description">
+				
+				<div>Angular 12 project with PHP/MySQL backend for download. Includes PHP and TypeScript source code.</div>
+				<div><i>289 kB</i></div>
+			</div>
+		</div>
+		
+		</div>
+	</td></tr>
+	
+	<tr>
+		<th>Languages</th>
+		<td><div class="summary-languages">
+			
+				PHP, 
+			
+				TypeScript
+			
+		</div></td>
+	</tr>
+	
+	
+	<tr>
+		<th>Technologies</th>
+		<td><div class="summary-technologies">
+			
+				Angular, 
+			
+				MySQL
+			
+		</div></td>
+	</tr>
+	
+
+	
+
+
+
+</table>
+</div>
+
+
+
+	<div class="app-banner">
+		<h2>Start using this application online</h2>
+		<p>The online version of this application is available at <a href="https://app.startscheduler.com/signup?t=restaurant" class="trackme" data-track-category="App" data-track-action="Start">startscheduler.com</a>.</p>
+		<div class="app-banner-button"><a href="https://app.startscheduler.com/signup?t=restaurant" class="trackme" data-track-category="App" data-track-action="Start">Start Now</a></div>
+	</div>
+
+
+<div class="article-text">
+<h2>Features</h2><ul><li><p>Angular 12 frontend</p></li><li><p>Built using&nbsp;<a href="https://doc.daypilot.org/scheduler/angular-2/">Angular Scheduler UI component</a>&nbsp;from DayPilot Pro for JavaScipt</p></li><li><p>Restaurant tables displayed in a tree hierarchy (by location)</p></li><li><p>New reservations can be created using drag and drop</p></li><li><p>Moving existing reservations using drag and drop (allows changing time and/or table)</p></li><li><p>Table filtering by number of table seats</p></li><li><p>Table filtering by availability at the specified time</p></li><li><p>Uses a REST API backend, implemented using PHP/MySQL</p></li><li><p>Includes a trial version of&nbsp;<a href="https://javascript.daypilot.org/">DayPilot Pro for JavaScript</a>&nbsp;(see License below)</p></li></ul><p>This tutorial is also available for JavaScript/PHP:</p><ul><li><p><a href="https://code.daypilot.org/97699/php-restaurant-table-reservation">PHP Restaurant Table Reservation Application (HTML5/JavaScript Frontend)</a></p></li></ul><h2>License</h2><p>Licensed for testing and evaluation purposes.&nbsp;Please see the license agreement included in the sample project. You can use the source code of the tutorial if you are a&nbsp;licensed user of DayPilot Pro for JavaScript.&nbsp;<a href="https://javascript.daypilot.org/buy/">Buy a license</a>.</p><h2>Scheduler UI Builder</h2><p>This project was generated using&nbsp;<a href="https://builder.daypilot.org/scheduler">Scheduler UI Builder</a>. You can use this&nbsp;<strong>visual tool to configure the Scheduler appearance and properties</strong>&nbsp;and generate a downloadable project.</p><h2>Angular Frontend Project</h2><p>The Angular frontend project ("angular-restaurant-php-frontend") is created using Angular CLI and uses Angular 12.</p><p>For a quick Scheduler project setup see&nbsp;<a href="https://code.daypilot.org/79946/angular-12-scheduler-quick-start-project">Angular Scheduler 12 Quick Start Project</a>. This downloadable project includes the boilerplate code required to get started with the Scheduler quickly.</p><p>All the scheduling logic is encapsulated in a special module (<code>SchedulerModule</code>). The module can be found in <code>src/app/scheduler</code> directory of the project and includes the following files:</p><ul><li><p><em>scheduler.module.ts</em> (the wrapping module)</p></li><li><p><em>scheduler.component.ts</em> (UI, main logic)</p></li><li><p><em>data.service.ts</em> (a service that communicates with the PHP backend using REST API)</p></li></ul><p>The Angular frontend project doesn't include NPM dependencies (<code>node_modules</code> directory). You can download and install the dependencies using npm:</p><pre><code>npm install</code></pre><p>You can run the Angular project using npm:</p><pre><code>npm run start</code></pre><h2>PHP Backend Project</h2><p>The PHP backend is a standalone project (<code>angular-restaurant-php-backend</code>).</p><p>We will use the web server embedded in PHP to run the backend on port 8090:</p><p>Linux:</p><pre><code>php -S 127.0.0.1:8090 -t /home/daypilot/tutorials/angular-restaurant-php-backend</code></pre><p>Windows:</p><pre><code>php.exe -S 127.0.0.1:8090 -t C:\Users\daypilot\tutorials\angular-restaurant-php-backend</code></pre><p>During development, the Angular project uses a proxy to make the backend available as <code>/api</code> on the same server:</p><p>proxy.conf.json:</p><pre><code>{
+  "/api": {
+    "target": "http://localhost:8090",
+    "secure": false
+  }
+}
+</code></pre><p>The "start" script in <em>package.json</em> applies the proxy configuration. All requests to <code>/api/*</code> will be proxied to the PHP web server running on port 8090.</p><pre><code>{
+  "name": "angular-restaurant-php-frontend",
+  // ...
+  "scripts": {
+    // ...
+    "start": "ng serve --proxy-config proxy.conf.json",
+    // ...
+  },
+}
+</code></pre><h2>Scheduler Configuration</h2><p>The Scheduler installation (installing DayPilot Pro NPM package, using <em>&lt;daypilot-scheduler&gt;</em> tag to display the Scheduler) and basic configuration is explained in the&nbsp;<a href="https://code.daypilot.org/67423/angular-scheduler-tutorial-typescript">Angular Scheduler Tutorial</a>.</p><p>See also the documentation on using the&nbsp;<a href="https://doc.daypilot.org/scheduler/angular-2/">Scheduler in Angular</a>.</p><h2>Scheduler Scale and Time Header Units</h2><p><img loading="lazy" src="https://cdn.code.daypilot.org/page/image/cozsiokyfzge5msy3w7robhwke/angular-restaurant-table-reservation-php-mysql-scale-time-headers.png" alt="angular restaurant table reservation php mysql scale time headers" title="angular restaurant table reservation php mysql scale time headers" width="860" height="129" border="0"  ></p><p>First, we will set the&nbsp;<a href="https://doc.daypilot.org/scheduler/scale/">scale</a>&nbsp;(cell duration) of the Scheduler to 15 minutes and set the&nbsp;<a href="https://doc.daypilot.org/scheduler/time-header-rows/">time header rows</a>&nbsp;to display days/hours/minutes. This will let the users schedule the restaurant table reservations in 15-minute blocks (<a href="https://doc.daypilot.org/scheduler/snap-to-grid/">snap-to-grid</a>&nbsp;is enabled by default).</p><p>scheduler.component.ts</p><pre><code>import {Component, ViewChild, AfterViewInit} from "@angular/core";
+import {DayPilot, DayPilotSchedulerComponent} from "daypilot-pro-angular";
+import {DataService, CreateEventParams, MoveEventParams, UpdateEventParams} from "./data.service";{}
+
+@Component({
+  selector: 'scheduler-component',
+  template: `&lt;daypilot-scheduler [config]="config" #scheduler&gt;&lt;/daypilot-scheduler&gt;`,
+  styles: [``]
+})
+export class SchedulerComponent implements AfterViewInit {
+
+  @ViewChild("scheduler", {static: false})
+  scheduler!: DayPilotSchedulerComponent;
+
+  config: DayPilot.SchedulerConfig = {
+    // ...
+    eventHeight: 40,
+    cellWidthSpec: "Fixed",
+    cellWidth: 50,
+    timeHeaders: [
+      {groupBy: "Day", format: "dddd, d MMMM yyyy"},
+      {groupBy: "Hour"},
+      {groupBy: "Cell", format: "mm"}
+    ],
+    scale: "CellDuration",
+    cellDuration: 15,
+    // ...
+  };
+
+  // ...
+  
+}
+</code></pre><h2>Loading Restaurant Table Data</h2><p><img loading="lazy" src="https://cdn.code.daypilot.org/page/image/ninqqhvc6jawjdbtr6upszeukm/angular-restaurant-table-reservation-php-mysql-loading-table-data.png" alt="angular restaurant table reservation php mysql loading table data" title="angular restaurant table reservation php mysql loading table data" width="860" height="491" border="0"  ></p><p>In order to display the <strong>restaurant tables</strong> on the vertical axis we need to fill the <code>resources</code> array of the <code>config</code> object. This array specifies the&nbsp;<a href="https://doc.daypilot.org/scheduler/resource-tree/">hierarchy of resources</a>&nbsp;that will be displayed as rows.</p><p>By default, the Scheduler displays a flat list. We want to display the tables in a tree hierarchy so we need to enable it using&nbsp;<a href="https://api.daypilot.org/daypilot-scheduler-treeenabled/">treeEnabled</a>&nbsp;property.</p><p>scheduler.component.ts</p><pre><code>import {Component, ViewChild, AfterViewInit} from "@angular/core";
+import {DayPilot, DayPilotSchedulerComponent} from "daypilot-pro-angular";
+import {DataService} from "./data.service";
+
+@Component({
+  selector: 'scheduler-component',
+  template: `&lt;daypilot-scheduler [config]="config" #scheduler&gt;&lt;/daypilot-scheduler&gt;`,
+  styles: [``]
+})
+export class SchedulerComponent implements AfterViewInit {
+
+  @ViewChild("scheduler", {static: false})
+  scheduler!: DayPilotSchedulerComponent;
+
+  config: DayPilot.SchedulerConfig = {
+    treeEnabled: true,
+    resources: []
+    // ...
+  };
+
+  constructor(private ds: DataService) {
+  }
+
+  ngAfterViewInit(): void {
+    this.ds.getResources().subscribe(result =&gt; this.config.resources = result);
+  }
+}
+</code></pre><p>The change of the config object is detected by Angular and the Scheduler is updated automatically. This is convenient but the cost of the automatic change detection increases with the number of resources. In order to improve the <a href="https://doc.daypilot.org/scheduler/angular-performance/">Angular Scheduler performance</a>, we switch to the direct API for resource (table) loading:</p><pre><code>import {Component, ViewChild, AfterViewInit} from "@angular/core";
+import {DayPilot, DayPilotSchedulerComponent} from "daypilot-pro-angular";
+import {DataService} from "./data.service";
+
+@Component({
+  selector: 'scheduler-component',
+  template: `&lt;daypilot-scheduler [config]="config" #scheduler&gt;&lt;/daypilot-scheduler&gt;`,
+  styles: [``]
+})
+export class SchedulerComponent implements AfterViewInit {
+
+  @ViewChild("scheduler", {static: false})
+  scheduler!: DayPilotSchedulerComponent;
+
+  config: DayPilot.SchedulerConfig = {
+    treeEnabled: true,
+    // ...
+  };
+
+  constructor(private ds: DataService) {
+  }
+
+  ngAfterViewInit(): void {
+    this.ds.getResources().subscribe(resources =&gt; this.scheduler.control.update({resources}));
+  }
+}</code></pre><p>We load the resources from the server-side PHP backend using <em>DataService</em> class. The <code>getResources()</code> method makes an HTTP request to <code>backend_resources.php</code>.</p><pre><code>import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs';
+import {DayPilot} from 'daypilot-pro-angular';
+import {HttpClient} from "@angular/common/http";
+
+@Injectable()
+export class DataService {
+
+  constructor(private http : HttpClient){
+  }
+
+  getResources(): Observable&lt;any[]&gt; {
+    return this.http.get("/api/backend_resources.php") as Observable&lt;any&gt;;
+  }
+
+  // ...
+
+}</code></pre><p>The PHP script (<em>backend_resources.php</em>) loads the tables from a MySQL database and returns a JSON array:</p><pre><code>&lt;?php
+require_once '_db.php';
+    
+$scheduler_groups = $db-&gt;query('SELECT * FROM groups ORDER BY name');
+
+class Group {}
+class Resource {}
+
+$groups = array();
+
+foreach($scheduler_groups as $group) {
+  $g = new Group();
+  $g-&gt;id = "group_".$group['id'];
+  $g-&gt;name = $group['name'];
+  $g-&gt;expanded = true;
+  $g-&gt;children = array();
+  $groups[] = $g;
+  
+  $stmt = $db-&gt;prepare('SELECT * FROM resources WHERE group_id = :group ORDER BY name');
+  $stmt-&gt;bindParam(':group', $group['id']);
+  $stmt-&gt;execute();
+  $scheduler_resources = $stmt-&gt;fetchAll();  
+  
+  foreach($scheduler_resources as $resource) {
+    $r = new Resource();
+    $r-&gt;id = $resource['id'];
+    $r-&gt;name = $resource['name'];
+    $r-&gt;seats = $resource['seats'];
+    $g-&gt;children[] = $r;
+  }
+}
+
+header('Content-Type: application/json');
+echo json_encode($groups);
+
+?&gt;
+</code></pre><p>Sample JSON response:</p><pre><code>[
+  {"id":"group_1","name":"Indoors","expanded":true,"children":[
+    {"id":"1","name":"Table 1","seats":"2"},
+    {"id":"2","name":"Table 2","seats":"3"},
+    {"id":"3","name":"Table 3","seats":"4"},
+    {"id":"4","name":"Table 4","seats":"4"},
+    {"id":"5","name":"Table 5","seats":"6"},
+    {"id":"6","name":"Table 6","seats":"6"}
+  ]},
+  {"id":"group_2","name":"Terrace","expanded":true,"children":[
+    {"id":"7","name":"Table 21","seats":"2"},
+    {"id":"8","name":"Table 22","seats":"2"},
+    {"id":"9","name":"Table 23","seats":"5"},
+    {"id":"10","name":"Table 24","seats":"5"},
+    {"id":"11","name":"Table 25","seats":"6"},
+    {"id":"12","name":"Table 26","seats":"6"}
+  ]}
+]</code></pre><h2>Displaying Table Seats</h2><p><img loading="lazy" src="https://cdn.code.daypilot.org/page/image/oaqr4cwtubcoxpduirken4beki/angular-restaurant-table-reservation-php-mysql-seats.png" alt="angular restaurant table reservation php mysql seats" title="angular restaurant table reservation php mysql seats" width="860" height="407" border="0"  ></p><p>In the next step, we will add a column to the row header that will display a number of seats for every table.</p><p>The&nbsp;<a href="https://doc.daypilot.org/scheduler/row-header-columns/">row header columns</a>&nbsp;can be specified using <em>rowHeaderColumns</em> property. In the default configuration, the Scheduler automatically adjusts the column width to match the content (<a href="https://doc.daypilot.org/scheduler/row-header-width-auto-fit/">row header width auto-fit</a>&nbsp;is enabled).</p><p>The actual number of seats for every table is available in the <code>resources</code> array (see <em>backend_resources.php</em> script) as <code>seats</code> property of each child item. We will use&nbsp;<a href="https://api.daypilot.org/daypilot-scheduler-onbeforerowheaderrender/">onBeforeRowHeaderRender</a>&nbsp;event handler to display and format the column HTML.</p><p>scheduler.component.ts</p><pre><code>import {Component, ViewChild, AfterViewInit} from "@angular/core";
+import {DayPilot, DayPilotSchedulerComponent} from "daypilot-pro-angular";
+import {DataService, CreateEventParams, MoveEventParams, UpdateEventParams} from "./data.service";
+
+@Component({
+  selector: 'scheduler-component',
+  template: `&lt;daypilot-scheduler [config]="config" #scheduler&gt;&lt;/daypilot-scheduler&gt;`,
+  styles: [``]
+})
+export class SchedulerComponent implements AfterViewInit {
+
+  @ViewChild("scheduler", {static: false})
+  scheduler!: DayPilotSchedulerComponent;
+
+  config: DayPilot.SchedulerConfig = {
+    // ...
+    rowHeaderColumns: [
+      {title: "Table", display: "name"},
+      {title: "Seats"}
+    ],
+    onBeforeRowHeaderRender: args =&gt; {
+      if (args.row.data.seats &amp;&amp; args.row.columns[0]) {
+        args.row.columns[1].html = args.row.data.seats + " seats";
+      }
+    },
+  };
+
+  constructor(private ds: DataService) {
+  }
+
+  ngAfterViewInit(): void {
+    this.ds.getResources().subscribe(resources =&gt; this.scheduler.control.update({ resources }));
+
+    // ...
+  }
+
+  // ...
+
+}
+</code></pre><h2>Business Hours</h2><p><img loading="lazy" src="https://cdn.code.daypilot.org/page/image/ceqfrcpeafcbrd3o5gqv6a76f4/angular-restaurant-table-reservation-business-hours.png" alt="angular restaurant table reservation business hours" title="angular restaurant table reservation business hours" width="860" height="371" border="0"  ></p><p>We will limit the displayed timeline to business hours (from 11 AM to 12 AM).&nbsp;The restaurant business hour can be defined using <a href="https://api.daypilot.org/daypilot-scheduler-businessbeginshour/">businessBeginsHour</a> and <a href="https://api.daypilot.org/daypilot-scheduler-businessendshour/">businessEndsHour</a> properties. By default, the non-business hours are visible and have a different cell background color. The Angular Scheduler component can hide the non-business hours - instead of the the non-business hours, the Scheduler will display a vertical line that suggests that the timeline is interrupted here. See also&nbsp;<a href="https://doc.daypilot.org/scheduler/hiding-non-business-hours/">Hiding Non-Business Hours</a>.</p><pre><code>import {Component, ViewChild, AfterViewInit} from "@angular/core";
+import {DayPilot, DayPilotSchedulerComponent} from "daypilot-pro-angular";
+import {DataService, CreateEventParams, MoveEventParams, UpdateEventParams} from "./data.service";
+
+@Component({
+  selector: 'scheduler-component',
+  template: `&lt;daypilot-scheduler [config]="config" #scheduler&gt;&lt;/daypilot-scheduler&gt;`,
+  styles: [``]
+})
+export class SchedulerComponent implements AfterViewInit {
+
+  @ViewChild("scheduler", {static: false})
+  scheduler!: DayPilotSchedulerComponent;
+
+  config: DayPilot.SchedulerConfig = {
+    // ...
+    businessBeginsHour: 11,
+    businessEndsHour: 24,
+    showNonBusiness: false,
+    // ...
+  };
+
+  // ...
+  
+}</code></pre><h2>Loading Table Reservations</h2><p><img loading="lazy" src="https://cdn.code.daypilot.org/page/image/fsn5s2kfd5adtovuufon3kx664/angular-restaurant-php-mysql-loading-reservations.png" alt="angular restaurant php mysql loading reservations" title="angular restaurant php mysql loading reservations" width="860" height="409" border="0"  ></p><p>Now it's time to load the table reservation data. We subscribe to <em>getEvents()</em> method of the <em>DataService</em>&nbsp;class which loads the data from the server side. We limit the event date by the Scheduler grid start (<a href="https://api.daypilot.org/daypilot-scheduler-visiblestart/">visibleStart()</a> method) and end (<a href="https://api.daypilot.org/daypilot-scheduler-visibleend/">visibleEnd()</a> method).</p><p>While it is possible to use the Angular change detection and load the data using the <code>[events]</code> attribute of the <code>&lt;daypilot-scheduler&gt;</code> tag, we will use the direct API to load the reservation data to improve performance.</p><p>scheduler.component.ts</p><pre><code>import {Component, ViewChild, AfterViewInit} from "@angular/core";
+import {DayPilot, DayPilotSchedulerComponent} from "daypilot-pro-angular";
+import {DataService} from "./data.service";
+
+@Component({
+  selector: 'scheduler-component',
+  template: `&lt;daypilot-scheduler [config]="config" #scheduler&gt;&lt;/daypilot-scheduler&gt;`,
+  styles: [``]
+})
+export class SchedulerComponent implements AfterViewInit {
+
+  @ViewChild("scheduler", {static: false})
+  scheduler!: DayPilotSchedulerComponent;
+
+  // ...
+
+  constructor(private ds: DataService) {
+  }
+
+  ngAfterViewInit(): void {
+    // ...
+
+    var from = this.scheduler.control.visibleStart();
+    var to = this.scheduler.control.visibleEnd();
+    this.ds.getEvents(from, to).subscribe(result =&gt; {
+      this.scheduler.control.update({events});
+    });
+  }
+}
+</code></pre><p>data.service.ts</p><pre><code>import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {DayPilot} from 'daypilot-pro-angular';
+import {HttpClient} from "@angular/common/http";
+
+@Injectable()
+export class DataService {
+
+  constructor(private http : HttpClient){
+  }
+
+  getEvents(from: DayPilot.Date, to: DayPilot.Date): Observable&lt;any[]&gt; {
+    return this.http.get("/api/backend_events.php?from=" + from.toString() + "&amp;to=" + to.toString()) as Observable&lt;any&gt;;
+  }
+
+  // ...
+
+}
+</code></pre><p>The <em>backend_events.php</em> script loads the table reservations from a database and returns a JSON array. Only the reservations for the selected time range (<code>from</code> and <code>to</code> query string parameters) are loaded.</p><pre><code>&lt;?php
+require_once '_db.php';
+
+$stmt = $db-&gt;prepare('SELECT * FROM events WHERE NOT ((end &lt;= :start) OR (start &gt;= :end))');
+$stmt-&gt;bindParam(':start', $_GET["from"]);
+$stmt-&gt;bindParam(':end', $_GET["to"]);
+$stmt-&gt;execute();
+$result = $stmt-&gt;fetchAll();
+
+class Event {}
+$events = array();
+
+foreach($result as $row) {
+  $e = new Event();
+  $e-&gt;id = $row['id'];
+  $e-&gt;text = $row['name'];
+  $e-&gt;start = $row['start'];
+  $e-&gt;end = $row['end'];
+  $e-&gt;resource = $row['resource_id'];
+  $events[] = $e;
+}
+
+header('Content-Type: application/json');
+echo json_encode($events);
+
+?&gt;
+</code></pre><p>Sample JSON response:</p><pre><code>[
+  {"id":"8","text":"Ms. Williams","start":"2019-06-06T18:00:00","end":"2019-06-06T19:30:00","resource":"1"},
+  {"id":"9","text":"Mr. Lee","start":"2019-06-06T18:00:00","end":"2019-06-06T20:00:00","resource":"3"},
+  {"id":"10","text":"Mr. Brown","start":"2019-06-06T17:00:00","end":"2019-06-06T19:00:00","resource":"5"}
+]</code></pre><p>We need to load both the table and reservation data in <code>ngAfterViewInit()</code>. We have used two separate HTTP calls (<code>/api/backend_events.php</code> for reservations and <code>/api/backend_resources.php</code> for tables).</p><p>So far, the HTTP calls were executed independently and the Scheduler was updated after each HTTP call was finished. This causes two update of the Angular Scheduler component which is redundant. In the next steps, we will execute the HTTP calls in parallel and <a href="https://code.daypilot.org/49902/javascript-scheduler-wait-for-parallel-http-requests">wait for both of them to complete</a> before updating the Scheduler (just once):</p><pre><code>async ngAfterViewInit(): Promise&lt;void&gt; {
+
+  const promiseResources = this.ds.getResources().toPromise();
+
+  const from = this.scheduler.control.visibleStart();
+  const to = this.scheduler.control.visibleEnd();
+  const promiseEvents = this.ds.getEvents(from, to).toPromise();
+
+  const [resources, events] = await Promise.all([promiseResources, promiseEvents]);
+
+  this.scheduler.control.update({
+    resources,
+    events
+  });
+}</code></pre><h2>Filtering Tables by Number of Seats</h2><p><img loading="lazy" src="https://cdn.code.daypilot.org/page/image/q4iidpbhwja53ifkf4k5qhftzi/angular-restaurant-table-reservation-php-mysql-filtering-by-seats.png" alt="angular restaurant table reservation php mysql filtering by seats" title="angular restaurant table reservation php mysql filtering by seats" width="860" height="340" border="0"  ></p><p>Now we are going to add a filter that helps users find a free table with a specified number of seats.</p><p>The filter is implemented as a simple drop-down list:</p><pre><code>&lt;div class="filter"&gt;
+  Filter:
+  &lt;select (change)="seatFilterChange($event);" [(ngModel)]="seatFilter"&gt;
+    &lt;option *ngFor="let it of seats" [ngValue]="it.value"&gt;{{it.name}}&lt;/option&gt;          
+  &lt;/select&gt;
+&lt;/div&gt;</code></pre><p>We will watch the <em>&lt;select&gt;</em> element for changes (see <em>seatFilter()</em> method) and use&nbsp;<a href="https://doc.daypilot.org/scheduler/row-filtering/">row filtering</a>&nbsp;feature of the Scheduler to hide rows that don't meet the selected criteria.</p><p>The&nbsp;<a href="https://api.daypilot.org/daypilot-scheduler-rows-filter/">rows.filter()</a>&nbsp;method requires the filter parameter as an argument. However, we replace it with an empty object (<em>{}</em>) and read the filter parameters directly from <em>this.seatFilter</em>. This will make it easier to add a filter with multiple conditions in the next step (see Filtering Tables by Time Slot below). The empty object is necessary because calling <em>rows.filter()</em> without an argument clears the filter.</p><p>The Scheduler uses&nbsp;<a href="https://api.daypilot.org/daypilot-scheduler-onrowfilter/">onRowFilter</a>&nbsp;event handler to determine whether a row should be visible or not. In this event handler, we use the row metadata (number of seats available as <em>args.row.data.seats</em>) to check the condition.</p><p>See also the row filtering tutorial:</p><ul><li><p><a href="https://code.daypilot.org/52354/angular-scheduler-row-filtering">Angular Scheduler: Row Filtering</a></p></li></ul><p>scheduler.component.ts</p><pre><code>import {Component, ViewChild, AfterViewInit} from "@angular/core";
+import {DayPilot, DayPilotSchedulerComponent} from "daypilot-pro-angular";
+import {DataService, CreateEventParams, MoveEventParams, UpdateEventParams} from "./data.service";
+
+@Component({
+  selector: 'scheduler-component',
+  template: `
+&lt;div class="filter"&gt;
+  Filter:
+  &lt;select (change)="seatFilterChange($event);" [(ngModel)]="seatFilter"&gt;
+    &lt;option *ngFor="let it of seats" [ngValue]="it.value"&gt;{{it.name}}&lt;/option&gt;          
+  &lt;/select&gt;  
+&lt;/div&gt;
+
+&lt;daypilot-scheduler [config]="config" #scheduler&gt;&lt;/daypilot-scheduler&gt;`,
+  styles: [`
+  ...
+  `]
+})
+export class SchedulerComponent implements AfterViewInit {
+
+  @ViewChild("scheduler")
+  scheduler!: DayPilotSchedulerComponent;
+
+  seats: any[] = [
+    { name: "All", value: 0},
+    { name: "2+ seats", value: 2},
+    { name: "3+ seats", value: 3},
+    { name: "4+ seats", value: 4},
+    { name: "5+ seats", value: 5},
+    { name: "6 seats", value: 6},
+  ];
+
+  seatFilter: number = 0;
+
+  config: DayPilot.SchedulerConfig = {
+    // ...
+    onRowFilter: args =&gt; {
+      let seatsMatching = args.row.data.seats &gt;= this.seatFilter;      
+
+      args.visible = seatsMatching;
+    },
+  };
+
+  constructor(private ds: DataService) {
+  }
+
+  seatFilterChange(ev): void {
+    this.scheduler.control.rows.filter({});
+  }
+
+  // ...
+
+}
+
+</code></pre><h2>Filtering Tables by Time Slot</h2><p><img loading="lazy" src="https://cdn.code.daypilot.org/page/image/5nrgtcfrqrfoxmptsybervnmiq/angular-restaurant-table-reservation-php-mysql-filtering-by-time.png" alt="angular restaurant table reservation php mysql filtering by time" title="angular restaurant table reservation php mysql filtering by time" width="860" height="420" border="0"  ></p><p>We will add one more way to filter the tables - by a specified time slot. After selecting a time slot the Scheduler will hide tables (rows) that are not available at that time. The selected time slot will be highlighted (green background):&nbsp;</p><p><img loading="lazy" src="https://cdn.code.daypilot.org/page/image/jlzomk3aczhshgsaelfwds3fu4/angular-restaurant-table-reservation-php-mysql-filtering-by-time-results.png" alt="angular restaurant table reservation php mysql filtering by time results" title="angular restaurant table reservation php mysql filtering by time results" width="860" height="384" border="0"  ></p><p>First, we add an event handler for&nbsp;<a href="https://api.daypilot.org/daypilot-scheduler-ontimeheaderclick/">onTimeHeaderClick</a>&nbsp;event. This will activate the filter for the given time range.</p><p>We also expand the <em>onRowFilter</em> event handler to use both the number of seats and the time range during filtering.</p><pre><code>// ...
+export class SchedulerComponent implements AfterViewInit {
+
+  // ...
+
+  timeFilter: {start: DayPilot.Date, end: DayPilot.Date } | null  = null;
+
+  config: DayPilot.SchedulerConfig = {
+  
+    // ...
+  
+    onTimeHeaderClick: args =&gt; {
+
+      this.timeFilter = {
+        start: args.header.start,
+        end: args.header.end
+      };
+
+      this.scheduler.control.rows.filter({});
+    },
+    
+    onRowFilter: args =&gt; {
+      let seatsMatching = args.row.data.seats &gt;= this.seatFilter;
+      let timeMatching = !this.timeFilter || !args.row.events.all().some(e =&gt; this.overlaps(e.start(), e.end(), this.timeFilter.start, this.timeFilter.end));
+
+      args.visible = seatsMatching &amp;&amp; timeMatching;
+    },
+    
+    // ...
+
+  };
+
+  // ...
+
+  overlaps(start1: DayPilot.Date, end1: DayPilot.Date, start2: DayPilot.Date, end2: DayPilot.Date): boolean {
+    return !(end1 &lt;= start2 || start1 &gt;= end2);
+  }
+
+
+}
+
+</code></pre><p>The selected time range will be highlighted using&nbsp;<a href="https://api.daypilot.org/daypilot-scheduler-onbeforetimeheaderrender/">onBeforeTimeHeaderRender</a>(time headers) and&nbsp;<a href="https://api.daypilot.org/daypilot-scheduler-onbeforecellrender/">onBeforeCellRender</a>&nbsp;(grid cells) event handlers. It applies a custom CSS class to headers/cells that overlap with the selection.</p><pre><code>// ...
+export class SchedulerComponent implements AfterViewInit {
+
+  // ...
+
+  timeFilter: {start: DayPilot.Date, end: DayPilot.Date } | null = null;
+
+  config: DayPilot.SchedulerConfig = {
+  
+    // ...
+  
+    onBeforeCellRender: args =&gt; {
+      if (!this.timeFilter) {
+        return;
+      }
+      if (this.overlaps(args.cell.start, args.cell.end, this.timeFilter.start, this.timeFilter.end)) {
+        args.cell.cssClass = "cell_selected";
+      }
+    },
+    
+    onBeforeTimeHeaderRender: args =&gt; {
+
+      if (this.timeFilter) {
+        if (args.header.start &gt;= this.timeFilter.start &amp;&amp; args.header.end &lt;= this.timeFilter.end) {
+          args.header.cssClass = "timeheader_selected";
+        }
+      }
+    },
+    
+    // ...
+
+  };
+
+  // ...
+
+}
+
+</code></pre><p><img loading="lazy" src="https://cdn.code.daypilot.org/page/image/o5yobaag6fccvjgt43jxhxkthi/angular-restaurant-table-reservation-php-mysql-clear-filter.png" alt="angular restaurant table reservation php mysql clear filter" title="angular restaurant table reservation php mysql clear filter" width="860" height="225" border="0"  ></p><p>Users can clear the time filter by clicking the "X" link in the filter label. This fires <em>clearTimeFilter()</em> method:</p><pre><code>import {Component, ViewChild, AfterViewInit} from "@angular/core";
+import {DayPilot, DayPilotSchedulerComponent} from "daypilot-pro-angular";
+import {DataService, CreateEventParams, MoveEventParams, UpdateEventParams} from "./data.service";
+
+@Component({
+  selector: 'scheduler-component',
+  template: `
+    &lt;div class="filter"&gt;
+      Filter:
+      &lt;select (change)="seatFilterChange($event);" [(ngModel)]="seatFilter"&gt;
+        &lt;option *ngFor="let it of seats" [ngValue]="it.value"&gt;{{it.name}}&lt;/option&gt;          
+      &lt;/select&gt;
+      
+      &lt;span *ngIf="timeFilter" class="timefilter"&gt;
+      {{timeFilter?.start?.toString("d/M/yyyy")}}
+      {{timeFilter?.start?.toString("h:mm tt")}} - {{timeFilter?.end?.toString("h:mm tt")}}
+      &lt;a href="#" (click)="clearTimeFilter()" class="remove"&gt;&amp;times;&lt;/a&gt;
+      &lt;/span&gt;
+      
+    &lt;/div&gt;
+
+    &lt;daypilot-scheduler [config]="config" #scheduler&gt;&lt;/daypilot-scheduler&gt;`,
+  styles: [`...`]
+})
+export class SchedulerComponent implements AfterViewInit {
+
+  // ...
+
+  clearTimeFilter(): boolean {
+    this.timeFilter = null;
+    this.scheduler.control.update();
+    return false;
+  }
+
+}</code></pre><h2>MySQL Support</h2><p>By default, the PHP backend project uses a local SQLite database. This is helpful for quick testing but the capabilities of SQLite database are limited.</p><p>You can switch to a MySQL database by editing the <code>_db.php</code> file:</p><pre><code>&lt;?php
+
+// use sqlite
+// require_once '_db_sqlite.php';
+
+// use MySQL
+require_once '_db_mysql.php';</code></pre><p>Don't forget to edit the file header and adjust the MySQL parameters as needed:</p><p>_db_mysql.php</p><pre><code>&lt;?php
+$host = "127.0.0.1";
+$port = 3306;
+$username = "username";
+$password = "password";
+$database = "restaurant";   // the database will be created if it doesn't exist
+
+// ...</code></pre><p>The MySQL database specified using the <code>$database</code> variable (<code>"restaurant"</code> by default) will be created automatically. However, make sure that the specified user has permissions to create/access the database.</p><h2>MySQL Database Schema</h2><p>The project uses a simple database schema with three tables:</p><ul><li><p><code>groups</code> table defines table groups</p></li><li><p><code>resources</code> table defines tables</p></li><li><p><code>events</code> table stores reservation data</p></li></ul><pre><code>CREATE TABLE `events` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` TEXT NULL,
+	`start` DATETIME NULL DEFAULT NULL,
+	`end` DATETIME NULL DEFAULT NULL,
+	`resource_id` VARCHAR(30) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `groups` (
+	`id` INT(11) NOT NULL,
+	`name` VARCHAR(200) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `resources` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(200) NULL DEFAULT NULL,
+	`seats` INT(11) NULL DEFAULT NULL,
+	`group_id` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
+);</code></pre><h2>History</h2><ul><li><p>June 15, 2021: Upgraded to Angular 12, DayPilot Pro for JavaScript 2021.2.5009; using system fonts; using direct API for table and reservation loading</p></li><li><p>November 26, 2020: Upgraded to Angular 11, DayPilot Pro for JavaScript 2020.4.4766.</p></li><li><p>August 3, 2020: Upgraded to Angular 10, DayPilot Pro for JavaScript 2020.3.</p></li><li><p>May 22, 2020: Upgraded to Angular 9, DayPilot Pro for JavaScript 2020.2.4470, tabular mode for row headers</p></li><li><p>June 8, 2019: Upgraded to Angular 8, DayPilot Pro for JavaScript 2019.2.3871</p></li><li><p>June 3, 2018: Upgraded to Angular 6, DayPilot Pro for JavaScript 2018.2.3297</p></li><li><p>February 17, 2018: Upgraded to Angular 5, DayPilot Pro for JavaScript 2018.1.3169</p></li><li><p>June 6, 2017: Initial release (Angular 4)</p></li></ul>
+</div>
+
+<div class="share-title">
+Share
+</div>
+
+<a class="share-button sb-twitter" href="https://twitter.com/share?text=Angular+Restaurant+Table+Reservation+%28PHP%2FMySQL%29&url=https%3A%2F%2Fcode.daypilot.org%2F13278%2Fangular-restaurant-table-reservation-php-mysql" title="Share on Twitter">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="20" viewBox="0 0 30 32" style="position:absolute; top: 10px; left: 30%;">
+        <path fill="#fff" d="M28.929 7.286q-1.196 1.75-2.893 2.982 0.018 0.25 0.018 0.75 0 2.321-0.679 4.634t-2.063 4.437-3.295 3.759-4.607 2.607-5.768 0.973q-4.839 0-8.857-2.589 0.625 0.071 1.393 0.071 4.018 0 7.161-2.464-1.875-0.036-3.357-1.152t-2.036-2.848q0.589 0.089 1.089 0.089 0.768 0 1.518-0.196-2-0.411-3.313-1.991t-1.313-3.67v-0.071q1.214 0.679 2.607 0.732-1.179-0.786-1.875-2.054t-0.696-2.75q0-1.571 0.786-2.911 2.161 2.661 5.259 4.259t6.634 1.777q-0.143-0.679-0.143-1.321 0-2.393 1.688-4.080t4.080-1.688q2.5 0 4.214 1.821 1.946-0.375 3.661-1.393-0.661 2.054-2.536 3.179 1.661-0.179 3.321-0.893z"></path>
+    </svg>
+</a>
+<a class="share-button sb-facebook" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fcode.daypilot.org%2F13278%2Fangular-restaurant-table-reservation-php-mysql&t=Angular+Restaurant+Table+Reservation+%28PHP%2FMySQL%29" title="Share on Facebook">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="19" height="20" viewBox="0 0 19 32" style="position:absolute; top: 10px; left: 40%;">
+        <path fill="#fff" d="M17.125 0.214v4.714h-2.804q-1.536 0-2.071 0.643t-0.536 1.929v3.375h5.232l-0.696 5.286h-4.536v13.554h-5.464v-13.554h-4.554v-5.286h4.554v-3.893q0-3.321 1.857-5.152t4.946-1.83q2.625 0 4.071 0.214z"></path>
+    </svg>
+</a>
+<a class="share-button sb-linkedin" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcode.daypilot.org%2F13278%2Fangular-restaurant-table-reservation-php-mysql&title=Angular+Restaurant+Table+Reservation+%28PHP%2FMySQL%29&summary=&source=" title="Share on LinkedIn">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="20" viewBox="0 0 27 32" style="position:absolute; top: 10px; left: 30%;">
+        <path fill="#fff" d="M6.232 11.161v17.696h-5.893v-17.696h5.893zM6.607 5.696q0.018 1.304-0.902 2.179t-2.42 0.875h-0.036q-1.464 0-2.357-0.875t-0.893-2.179q0-1.321 0.92-2.188t2.402-0.866 2.375 0.866 0.911 2.188zM27.429 18.714v10.143h-5.875v-9.464q0-1.875-0.723-2.938t-2.259-1.063q-1.125 0-1.884 0.616t-1.134 1.527q-0.196 0.536-0.196 1.446v9.875h-5.875q0.036-7.125 0.036-11.554t-0.018-5.286l-0.018-0.857h5.875v2.571h-0.036q0.357-0.571 0.732-1t1.009-0.929 1.554-0.777 2.045-0.277q3.054 0 4.911 2.027t1.857 5.938z"></path>
+    </svg>
+</a>
+
+
+
+<div class="questions-title">Related Questions</div>
+
+
+
+<div><a href="https://forums.daypilot.org/question/4536/2-rows-for-one-resource">2 rows for one resource (2 replies)</a> asked by fradega on Jan 28, 2019</div>
+
+<div><a href="https://forums.daypilot.org/question/4223/disable-event-overlap">Disable event overlap (1 reply)</a> asked by Jason on Apr 13, 2018</div>
+
+<div><a href="https://forums.daypilot.org/question/4220/move-event">Move event (3 replies)</a> asked by Jason on Apr 6, 2018</div>
+
+<div><a href="https://forums.daypilot.org/question/4185/change-the-position-of-createevent">Change the position of CreateEvent (1 reply)</a> asked by Jason on Mar 19, 2018</div>
+
+<div><a href="https://forums.daypilot.org/question/4174/how-to-run-php-code-without-affecting-performance">How to run PHP code without affecting performance (1 reply)</a> asked by Jason on Mar 8, 2018</div>
+
+<div><a href="https://forums.daypilot.org/question/4150/oneventresized-and-oneventmoved">onEventResized and onEventMoved (2 replies)</a> asked by Tom on Feb 13, 2018</div>
+
+<div><a href="https://forums.daypilot.org/question/4143/double-events-show">Double events show (1 reply)</a> asked by Tom on Feb 9, 2018</div>
+
+<div><a href="https://forums.daypilot.org/question/4137/how-to-make-the-demo-in-the-corner-disappear">how to make the &#034;DEMO&#034; in the corner disappear (1 reply)</a> asked by Tom on Feb 6, 2018</div>
+
+<div><a href="https://forums.daypilot.org/question/4130/how-to-show-more-information-then-just-the-name-of-the-event">how to show more information then just the name of the event (1 reply)</a> asked by Tom on Feb 2, 2018</div>
+
+<div><a href="https://forums.daypilot.org/question/4121/how-to-customize-the-create-event-dialog">How to customize the create event dialog (2 replies)</a> asked by Tom on Jan 31, 2018</div>
+
+<div><a href="https://forums.daypilot.org/question/4106/how-to-run-the-project-sample">How to run the project sample (1 reply)</a> asked by Tom on Jan 17, 2018</div>
+
+
+
+<div class="space">See <a href="https://forums.daypilot.org/tagged/article-13278-c">all related questions</a> [forums.daypilot.org]</div>
+
+
+
+<div class="ask-a-question">
+<a href="https://forums.daypilot.org/question/new?code=%2BYCUFgHIjtkIufr5FHSZ0YB2QVTa6i1zq0n%2BgGLxKyWI3L%2BsjHFYhbOSMs3yekiKlftxh0m8mruMlgCHejw5K9oCpWfRvvTaKJ96xKHsA4eAMtjdRb0ghKwHZtTFe9CkybP9F6icMId41GpmwaMo5ZW6H2mDcom8DldDagIPBtKIUHWal0Riy%2BlnjP%2Fd8%2F3t%2FQ%2FzGMLgRoQklWHhBPNpTqZw4DbHlKko0ATA5lW%2Fxm4tq%2BK6V6CtpLgnNlaEMDgQZ%2BkazGacYYR2lRyhfHuD6w%3D%3D" rel="nofollow">Ask a Question</a>
+</div>
+</div>
+
+					
+						<div class="related-bottom">
+
+						
+							<div class="article">
+							<div class="image"><a href="/52354/angular-scheduler-row-filtering" title="Angular Scheduler: Row Filtering"><img src="https://cdn.code.daypilot.org/image/big/zfeqguf5k5fk7jewcld3kpxvxu" loading="lazy" alt="Angular Scheduler: Row Filtering" width="860" height="388" style="max-width: 100%; height: auto;" /></a></div>
+							<div class="text">
+							<div class="related-article-title"><a href="/52354/angular-scheduler-row-filtering">Angular Scheduler: Row Filtering</a></div>
+							<div class="related-article-description">Angular 12 application with real-time filtering of Scheduler component rows (by name, by number of events).</div>
+							</div>
+							</div>
+						
+							<div class="article">
+							<div class="image"><a href="/67423/angular-scheduler-tutorial-typescript" title="Angular Scheduler Tutorial (TypeScript + PHP/MySQL)"><img src="https://cdn.code.daypilot.org/image/big/mxqvd2ll5jdjlemiumquhhudea" loading="lazy" alt="Angular Scheduler Tutorial (TypeScript + PHP/MySQL)" width="860" height="382" style="max-width: 100%; height: auto;" /></a></div>
+							<div class="text">
+							<div class="related-article-title"><a href="/67423/angular-scheduler-tutorial-typescript">Angular Scheduler Tutorial (TypeScript + PHP/MySQL)</a></div>
+							<div class="related-article-description">An Angular application that shows how to use DayPilot Scheduler with a PHP/MySQL backend.</div>
+							</div>
+							</div>
+						
+							<div class="article">
+							<div class="image"><a href="/35530/angular-scheduler-event-filtering" title="Angular Scheduler: Event Filtering"><img src="https://cdn.code.daypilot.org/image/big/u6p7xag74besjlvkx4uhnxqk7u" loading="lazy" alt="Angular Scheduler: Event Filtering" width="860" height="408" style="max-width: 100%; height: auto;" /></a></div>
+							<div class="text">
+							<div class="related-article-title"><a href="/35530/angular-scheduler-event-filtering">Angular Scheduler: Event Filtering</a></div>
+							<div class="related-article-description">Angular application with Scheduler component that can filter events in real time (by text, category, length).</div>
+							</div>
+							</div>
+						
+							<div class="article">
+							<div class="image"><a href="/72781/angular-work-order-scheduling-php-mysql" title="Angular Work Order Scheduling (PHP/MySQL)"><img src="https://cdn.code.daypilot.org/image/big/ikcpgjxt4nasfo6x4wb2evcfwm" loading="lazy" alt="Angular Work Order Scheduling (PHP/MySQL)" width="860" height="363" style="max-width: 100%; height: auto;" /></a></div>
+							<div class="text">
+							<div class="related-article-title"><a href="/72781/angular-work-order-scheduling-php-mysql">Angular Work Order Scheduling (PHP/MySQL)</a></div>
+							<div class="related-article-description">Angular web application that lets you assign and schedule work orders using drag and drop. Built using DayPilot Scheduler Angular component. Includes a REST backend implemented in PHP/MySQL</div>
+							</div>
+							</div>
+						
+							<div class="article">
+							<div class="image"><a href="/95800/angular-11-scheduler-quick-start-project" title="Angular 11 Scheduler Quick Start Project"><img src="https://cdn.code.daypilot.org/image/big/ttcx5mji6jecvnze3io3tmytfa" loading="lazy" alt="Angular 11 Scheduler Quick Start Project" width="860" height="446" style="max-width: 100%; height: auto;" /></a></div>
+							<div class="text">
+							<div class="related-article-title"><a href="/95800/angular-11-scheduler-quick-start-project">Angular 11 Scheduler Quick Start Project</a></div>
+							<div class="related-article-description">Add an Angular Scheduler component to your application and use it to manage a schedule online. Add, move, edit, and delete reservations using drag and drop.</div>
+							</div>
+							</div>
+						
+						</div>
+					
+				</div>
+	        </div>
+	        <div class="dpw-sidebar">
+		           	
+   	        </div>
+	    </div>
+
+		
+
+
+
+
+    <div class="dpw-footer">
+        <div class="dpw-footer-inner">
+            <div class="dpw-four-cols">
+                <div class="dpw-col">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="https://javascript.daypilot.org/">DayPilot for JavaScript</a></li>
+                        <li><a href="https://aspnet.daypilot.org/">DayPilot for ASP.NET WebForms</a></li>
+                        <li><a href="https://mvc.daypilot.org/">DayPilot for ASP.NET MVC</a></li>
+                        <li><a href="https://java.daypilot.org/">DayPilot for Java</a></li>
+                    </ul>
+                </div>
+                <div class="dpw-col">
+                    <h3>Resources</h3>
+                    <ul>
+                    	<li><a href="https://code.daypilot.org/">Tutorials and Code Samples</a></li>                        
+                    	<li><a href="https://doc.daypilot.org/">Documentation</a></li>
+                    	<li><a href="https://api.daypilot.org/">API</a></li>
+                        <li><a href="https://forums.daypilot.org/">Forums</a></li>
+                        <li><a href="https://news.daypilot.org/">News</a></li>
+                        <li><a href="https://kb.daypilot.org/">Knowledge Base</a></li>
+                    </ul>
+                    <h3>Tools</h3>
+                    <ul>
+                    	<li><a href="https://themes.daypilot.org/">CSS Theme Designer</a></li>                        
+                    	<li><a href="https://builder.daypilot.org/">UI Builder</a></li>                        
+                    </ul>
+                </div>
+                <div class="dpw-col">
+                    <h3>About Us</h3>
+                    <ul class="reset">
+                        <li><a href="https://www.daypilot.org/contact/">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="dpw-col">
+                    <h3>DayPilot Pro</h3>
+                    <p>HTML5 event calendar/scheduling components. Available for JavaScript/Angular/React/Vue, ASP.NET, ASP.NET MVC. Build resource booking, project management, time tracking applications, personal and shared event calendars.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<script type="text/javascript" src="https://cdn.static.daypilot.org/cookie/v2/cookie.js" defer></script>
+
+
+
+		<script type="text/javascript" src='https://cdn.code.daypilot.org/js/app.js?v=2022.01.10.71994' defer></script>
+
+
+	</body>
+</html>
